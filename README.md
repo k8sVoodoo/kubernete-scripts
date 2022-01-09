@@ -35,3 +35,7 @@ Prerequisites:
   - kubectx installed for changing contexts
 
 These scripts check for kapp-controller and calico pods that are *not* in a *Running* state respectfully. This allows to quickly identify which cluster has any of these pods in a bad state for troubleshooting.
+
+## IMGPKG PATCH SCRIPT
+
+This script is a template you can use to quickly patch the reference to a imgpkg bundle. In this example we are patching postgres statefulset reference to a new bundle with a tag of 8.0.0 
