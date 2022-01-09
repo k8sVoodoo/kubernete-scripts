@@ -39,3 +39,7 @@ These scripts check for kapp-controller and calico pods that are *not* in a *Run
 ## IMGPKG PATCH SCRIPT
 
 This script is a template you can use to quickly patch the reference to a imgpkg bundle. In this example we are patching postgres statefulset reference to a new bundle with a tag of 8.0.0 
+
+## BAD CONTOUR PODS SCRIPT
+
+A simple script to check for contour/envoy pods in a bad state and if so it will restart those pods. 
