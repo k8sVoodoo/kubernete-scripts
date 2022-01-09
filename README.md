@@ -27,3 +27,11 @@ Prerequisites:
   - kubectx installed for changing contexts
 
 This script loops through each cluster and does a rolling restart on each kiam deployment and daemonset. This gracefully restarts kiam server pods and kiam agent pods.
+
+## KAPP-CONTROLLER & CALICO HEALTH SCRIPTS
+
+Prerequisites:
+  - kubectl installed where the script will be ran
+  - kubectx installed for changing contexts
+
+These scripts check for kapp-controller and calico pods that are *not* in a *Running* state respectfully. This allows to quickly identify which cluster has any of these pods in a bad state for troubleshooting.
