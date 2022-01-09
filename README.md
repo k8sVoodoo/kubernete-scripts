@@ -59,3 +59,10 @@ Usage:
 ```
 python3 delete-runners.py <your personal access token> -g <group id> --stale_date <example 2021-07-25>
 ```
+
+# GENERATE KUBECONFIG AUTOMATION SCRIPT
+
+Prerequisites:
+  - kubectl installed where the script will be ran
+
+Within the folder generate-kubeconfig you will find two scripts. The main one to run is kubeconfig-script.sh and the helper script is generate-kubeconfig.sh which runs through each namespace and creates a kubeconfig for each one. This is useful if you are trying to automate the process of getting an application into Production. Part of the path to production for an app team is generating their kubeconfig and automating this process saves valuable time. You can turn these into a CI job within your pipeline. 
