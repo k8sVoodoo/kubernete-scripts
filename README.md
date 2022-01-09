@@ -66,3 +66,12 @@ Prerequisites:
   - kubectl installed where the script will be ran
 
 Within the folder generate-kubeconfig you will find two scripts. The main one to run is kubeconfig-script.sh and the helper script is generate-kubeconfig.sh which runs through each namespace and creates a kubeconfig for each one. This is useful if you are trying to automate the process of getting an application into Production. Part of the path to production for an app team is generating their kubeconfig and automating this process saves valuable time. You can turn these into a CI job within your pipeline. 
+
+## CLOUDFORMATION CLAMAV SCANNING S3 BUCKETS
+
+Prerequisites:
+  - AWS Console access
+  - Cloudformation access
+  - IAM admin access
+
+There is two files in the cloudformation folder ( clamAV-S3-buckets.yaml & s3-buckets-to-scan.yaml ). This is Infrastructure as Code (IaC) to automate building AWS resources for clamAV bucket, lambda, IAM roles and policies along with a test bucket to test the the scanning policies. Use this as a template to get you started creating these resources. You will need additional zip files for the clamAV lambda to function properly which you can find within the clamAV documentation. This specific s3 testapp bucket will have a policy to scan for INFECTED files. You can set up Cloudwatch eventbridge and SNS for alerting. 

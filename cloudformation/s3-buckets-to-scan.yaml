@@ -1,0 +1,100 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: 'Create application teams buckets and IAM roles'
+
+# In the AWS console, upload this code as JSON document in Cloud Formation.
+# Apply the tag "Owner: Instance-Operations" to the Cloud Formation stack.
+Parameters:
+  environment:
+    Description: Environment name (dev, test, prod)
+    Type: String
+    AllowedValues: 
+    - dev
+    - test
+    - prod
+  kiamDEV:
+    Description: Kiam arn for dev
+    Type: String
+    # Ensure you put your ARN
+    Default: "arn for your KIAM IAM role"
+  kiamTEST:
+    Description: Kiam arn for test
+    Type: String
+    # Ensure you put your ARN
+    Default: "arn for your KIAM IAM role"
+  kiamPROD:
+    Description: Kiam arn for prod
+    Type: String
+    # Ensure you put your ARN
+    Default: "arn for your KIAM IAM role"
+  baseName:
+    Description: Environment name (dev, test, prod)
+    Type: String
+  s3Resource:
+    Description: S3 arn
+    Type: String
+    # Ensure you put your ARN
+    Default: "your default arn for s3"
+Mappings:
+  apps:
+    names:
+      testapp: "testapp"
+    
+Conditions:
+  cEnvIsTest: !Equals [!Ref environment, test]
+  cEnvIsProd: !Equals [!Ref environment, prod]
+  cEnvIsDev: !Equals [!Ref environment, dev]
+
+#TEST Application
+Resources:
+  # Encrypted S3 Bucket for Storage & bucket policy
+  testAppBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: false
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+      BucketName: !Join ['-',[!Ref baseName , !Ref environment, !FindInMap [apps, names ,"testapp"]]]
+  testAppBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref testAppBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+        -
+          Sid: AllowSSLRequestsOnly
+          Effect: "Deny"
+          Principal: "*"
+          Action: 
+            - "s3:*"
+          Resource:
+            -  !Join ['-',[!Ref s3Resource , !Ref environment, !FindInMap [apps, names ,"testapp"]]]
+            -  !Join ['',[!Ref s3Resource , "-", !Ref environment, "-", !FindInMap [apps, names ,"testapp"], "/*"]]
+          Condition:
+            Bool:
+              aws:SecureTransport: false
+        - 
+          Sid: DenyDownload
+          Effect: Deny
+          Principal: "*"
+          Action:
+            - s3:GetObject
+            - s3:PutObjectTagging
+          Resource: !Join ['',[!Ref s3Resource , "-", !Ref environment, "-", !FindInMap [apps, names ,"testapp"], "/*"]]
+          Condition:
+            StringEquals:
+              "s3:ExistingObjectTag/av-status": "INFECTED"
+Outputs:
+  testAppBucket:
+    Description: 'Test App Bucket'
+    Value:
+      Ref: 'testAppBucket'
+              
