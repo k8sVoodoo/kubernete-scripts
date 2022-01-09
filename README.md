@@ -19,3 +19,11 @@ Getting nodes from each cluster and putting them in a file called nodes
 nodes file saved
 All nodes have assigned roles
 ```
+
+## KIAM KILLER SCRIPT
+
+Prerequisites:
+  - kubectl installed where the script will be ran
+  - kubectx installed for changing contexts
+
+This script loops through each cluster and does a rolling restart on each kiam deployment and daemonset. This gracefully restarts kiam server pods and kiam agent pods.
