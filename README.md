@@ -43,3 +43,19 @@ This script is a template you can use to quickly patch the reference to a imgpkg
 ## BAD CONTOUR PODS SCRIPT
 
 A simple script to check for contour/envoy pods in a bad state and if so it will restart those pods. 
+
+## DELETE STALE GITLAB RUNNERS PYTHON SCRIPT
+
+Prerequisites:
+  - python3
+  - import gitlab
+  - import argparse
+  - import datetime
+  - update gl variable within the script to your gitlab URL
+
+This script deletes stale unused Gitlab runners that can accumulate over time. 
+
+Usage:
+```
+python3 delete-runners.py <your personal access token> -g <group id> --stale_date <example 2021-07-25>
+```
