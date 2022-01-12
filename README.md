@@ -75,3 +75,11 @@ Prerequisites:
   - IAM admin access
 
 There is two files in the cloudformation folder ( clamAV-S3-buckets.yaml & s3-buckets-to-scan.yaml ). This is Infrastructure as Code (IaC) to automate building AWS resources for clamAV bucket, lambda, IAM roles and policies along with a test bucket to test the the scanning policies. Use this as a template to get you started creating these resources. You will need additional zip files for the clamAV lambda to function properly which you can find within the clamAV documentation. This specific s3 testapp bucket will have a policy to scan for INFECTED files. You can set up Cloudwatch eventbridge and SNS for alerting. 
+
+## SPIFFE FOLDER
+
+Prerequisites:
+  - Minikube (Mac Docker Desktop)
+  - Kubectl
+
+This folder is a simple script to quickly install SPIFFE server and agents in your local environment using minikube. This is strictly for you to install and play around with the configs if you decide to use it in a production environment in the future. SPIFFE is an identity framework and the provided script git clones the repo and changes directory to the directory needed to quick start. Then all the kubernetes resourses will be installed and ready to start playing around with!
