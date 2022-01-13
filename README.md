@@ -83,3 +83,26 @@ Prerequisites:
   - Kubectl
 
 This folder is a simple script to quickly install SPIFFE server and agents in your local environment using minikube. This is strictly for you to install and play around with the configs if you decide to use it in a production environment in the future. SPIFFE is an identity framework and the provided script git clones the repo and changes directory to the directory needed to quick start. Then all the kubernetes resourses will be installed and ready to start playing around with!
+
+## CLUSTERBUILDER PUSH SCRIPT
+
+Prerequisites:
+  - imgpkg installed
+  - vendir installed
+  - kbld installed
+
+This script is a template if you want to imgpkg a bundle that does NOT pull from upstream but rather bundling a set of directories together into one single bundle that can be referenced in code somewhere else. This script will update your tag and give a couple options to push the image to image repositories (such as Harbor and AWS container registry). An example of a directory path you would want to bundle:
+```
+  - clusterbuilder/
+    - bundle/
+      - .imgpkg/images.yaml
+      - clusterbuilder/
+        - common/
+          - global-values.yaml
+          - kapp-config.yaml          
+          - kbld-config.yaml
+      - sample/fake-values.yaml
+      - current-version.yaml
+      - vendir.lock.yaml
+      - vendir.yaml
+```
